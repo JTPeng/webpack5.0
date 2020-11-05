@@ -1,5 +1,6 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { resolve } = require('path')
-const HtmlWebpackPlugins = require('html-webpack-plugin')
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -9,43 +10,42 @@ module.exports = {
   module: {
     rules: [
       {
-        // css解析  css是在js中引入的。无需单独一个文件
+        // 解析css
         test: /\.css$/,
         loader: ['style-loader', 'css-loader'],
       },
       {
-        // less解析
+        //解析less
         test: /\.less$/,
         loader: ['style-loader', 'css-loader', 'less-loader'],
       },
       {
-        // css内的图片url处理
-        test: /\.(png|gif|jpg)$/,
+        // 解析图片
+        test: /\.(png|jpg|gif)$/,
         loader: 'url-loader',
         options: {
-          limit: 8 * 1024,
+          limit: 8 * 1024, // 8kb以下的打包成base64格式
           name: '[hash:10].[ext]',
           outputPath: 'imgs',
         },
       },
       {
-        // html中的url处理
+        // html中的url解析
         test: /\.html$/,
         loader: 'html-loader',
       },
       {
         // 其他文件处理
-        exclude: /\.(html|css|less|png|jpg|gif|js)$/,
+        exclude: /\.(html|css|js|less|png|gif|jpg)$/,
         loader: 'file-loader',
         options: {
-          name: '[hash:10].[ext]',
           outputPath: 'media',
         },
       },
     ],
   },
   plugins: [
-    new HtmlWebpackPlugins({
+    new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
   ],
