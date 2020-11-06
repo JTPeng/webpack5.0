@@ -62,6 +62,17 @@ module.exports = {
         },
       },
       {
+        // elsint语法检查
+        test: /\.js$/,
+        exclude: /node_modules/, // 忽略node_modules
+        enforce: 'pre', // 优先执行
+        loader: 'eslint-loader',
+        options: {
+          // 自动修复
+          fix: true,
+        },
+      },
+      {
         // 处理js兼容性和eslint检查
         test: /\.js$/,
         // 排除插件内的js
